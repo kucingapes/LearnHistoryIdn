@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "815203330547",
+    "firebase_url": "https://learnhistoryidn.firebaseio.com",
+    "project_id": "learnhistoryidn",
+    "storage_bucket": "learnhistoryidn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815203330547:android:b880c7840590eb91",
+        "android_client_info": {
+          "package_name": "com.utsman.kucingapes.learnhistoryidn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815203330547-5esjhld4sp5rv3k4m53bdp8fdtnkq9ce.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utsman.kucingapes.learnhistoryidn",
+            "certificate_hash": "c0de2f128a18503309166db0b03dd2a9ff178c42"
+          }
+        },
+        {
+          "client_id": "815203330547-tsmdtv16cvvlh2m5qr65m83q222rs94b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhmvyXvDdg7dHI0ImGVAlHBPvqvJj0W5U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815203330547-tsmdtv16cvvlh2m5qr65m83q222rs94b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
