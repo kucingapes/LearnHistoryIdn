@@ -48,16 +48,16 @@ public class Recycler extends AppCompatActivity {
 
         mRecyclerView.hasFixedSize();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Query dataQuery = mDatabase.orderByKey();
-        Query catQuery = mDatabase.orderByChild("cat").startAt(kategori);
+        //Query dataQuery = mDatabase.orderByKey();
+        Query catQuery = mDatabase.orderByChild("cat").equalTo(kategori);
+
+        /*FirebaseRecyclerOptions recyclerOptions = new FirebaseRecyclerOptions.Builder<RcGetter>()
+                .setQuery(dataQuery, RcGetter.class).build();*/
 
         FirebaseRecyclerOptions recyclerOptions = new FirebaseRecyclerOptions.Builder<RcGetter>()
-                .setQuery(dataQuery, RcGetter.class).build();
-
-        FirebaseRecyclerOptions recyclerOptions1 = new FirebaseRecyclerOptions.Builder<RcGetter>()
                 .setQuery(catQuery, RcGetter.class).build();
 
-        mAdapter = new FirebaseRecyclerAdapter<RcGetter, ItemViewHolder>(recyclerOptions1) {
+        mAdapter = new FirebaseRecyclerAdapter<RcGetter, ItemViewHolder>(recyclerOptions) {
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull final RcGetter model) {
                 holder.setTitle(model.getTitle());
@@ -87,7 +87,7 @@ public class Recycler extends AppCompatActivity {
             }
         };
 
-        //mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -95,7 +95,6 @@ public class Recycler extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAdapter.notifyDataSetChanged();
         mAdapter.startListening();
     }
 
