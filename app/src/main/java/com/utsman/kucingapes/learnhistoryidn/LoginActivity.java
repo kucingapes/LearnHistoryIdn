@@ -103,9 +103,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(LoginActivity.this, "Gagal, cek koneksi internet anda", Toast.LENGTH_SHORT).show();
+                            hideProgressDialog();
                         }
 
-                        hideProgressDialog();
+
 
                     }
                 });
@@ -114,18 +115,21 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
+            showProgressDialog();
             final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("data");
             final DatabaseReference cDatabase = FirebaseDatabase.getInstance().getReference().child("user");
             cDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        hideProgressDialog();
+                        Intent intent = new Intent(LoginActivity.this, MainMenu.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "Selamat datang kembali", Toast.LENGTH_SHORT).show();
                     } else {
                         copyData(mDatabase, cDatabase);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        hideProgressDialog();
+                        Intent intent = new Intent(LoginActivity.this, MainMenu.class);
                         startActivity(intent);
                     }
                 }
@@ -135,11 +139,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-
-
-
-            /*Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);*/
         }
     }
 
@@ -153,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if (databaseError != null){
-                                Toast.makeText(getApplicationContext(), "gaagl", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "sukses", Toast.LENGTH_SHORT).show();
                             }

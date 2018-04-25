@@ -22,6 +22,8 @@ import com.google.firebase.database.Query;
 import com.utsman.kucingapes.learnhistoryidn.Adapter.ItemCategoryHolder;
 import com.utsman.kucingapes.learnhistoryidn.Adapter.RcGetter;
 
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+
 public class MainMenu extends AppCompatActivity {
     private FirebaseRecyclerAdapter<RcGetter, ItemCategoryHolder> cAdapter;
 

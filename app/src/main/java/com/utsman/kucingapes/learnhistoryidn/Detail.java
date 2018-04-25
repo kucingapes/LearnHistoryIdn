@@ -1,9 +1,11 @@
 package com.utsman.kucingapes.learnhistoryidn;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewTreeObserver;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -23,17 +25,14 @@ import br.tiagohm.markdownview.css.styles.Github;
 
 public class Detail extends AppCompatActivity {
 
-    WebView webView;
     ScrollView scroll;
     MarkdownView markdownView;
 
-    private static int save;
-    private static int saveScroll;
     FirebaseDatabase database;
     DatabaseReference mRef;
 
-    String url;
-    int id;
+    String url, kategori;
+    int id, patokan;
 
     FirebaseUser user;
     FirebaseAuth mAuth;
@@ -53,72 +52,48 @@ public class Detail extends AppCompatActivity {
         url = bundle.getString("url");
         id = bundle.getInt("id");
 
-
         markdownView.addStyleSheet(new Github());
+        markdownView.getSettings().setAppCacheEnabled(true);
+        markdownView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getPath());
+        markdownView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         markdownView.loadMarkdownFromUrl(url);
-
-
-        webView = findViewById(R.id.web);
-        webView.loadUrl("https://github.com/antonKozyriatskyi/CircularProgressIndicator/blob/master/README.md");
-
-
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                database = FirebaseDatabase.getInstance();
-                mRef = database.getReference().child("bah");
-                mRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int Y = dataSnapshot.getValue(Integer.class);
-                        //int Y = Integer.parseInt(scrol);
-
-                        webView.setScrollY(Y);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                //final int lenght = webView.getMeasuredHeight();
-                final int lenght = webView.getContentHeight();
-                //final int nah = scroll.getChildAt(0).getHeight();
-                final int nah = scroll.getMeasuredHeight();
-
-
-                //database = FirebaseDatabase.getInstance();
-
-            }
-        }, 5000);*/
     }
 
     @Override
     public void onBackPressed() {
-        save = webView.getScrollY();
-        saveScroll = scroll.getScrollY();
-        //int totalHeight = scroll.getChildAt(0).getHeight();
+        int saveScroll = scroll.getScrollY();
         int scrollHeight = scroll.getChildAt(0).getHeight();
 
         RelativeLayout relativeLayout = findViewById(R.id.parent);
         int parentHeight = relativeLayout.getHeight();
 
         final int total = scrollHeight-parentHeight;
-        final int persen = (int) (saveScroll*100f/total);
+        final int persen = (int) (saveScroll *100f/total);
+
+        final String equalid = String.valueOf(id);
 
         database = FirebaseDatabase.getInstance();
-        mRef = database.getReference().child("bah");
-        mRef.setValue(saveScroll);
+        mRef = database.getReference().child("user").child(user.getUid());
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                patokan = dataSnapshot.child(equalid).child("prog").getValue(Integer.class);
+                kategori = dataSnapshot.child(equalid).child("cat").getValue(String.class);
 
-        mRef = database.getReference().child("cl");
-        mRef.setValue(persen);
+                if (persen >= patokan) {
+                    final DatabaseReference cDat = FirebaseDatabase.getInstance().getReference()
+                            .child("user").child(user.getUid());
 
-        final DatabaseReference cDat = FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
+                    cDat.child(String.valueOf(id)).child("prog").setValue(persen);
+                }
+            }
 
-        cDat.child(String.valueOf(id)).child("prog").setValue(persen);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-       // mRef = database.getReference().child("data")
+            }
+        });
+
         super.onBackPressed();
     }
 }
