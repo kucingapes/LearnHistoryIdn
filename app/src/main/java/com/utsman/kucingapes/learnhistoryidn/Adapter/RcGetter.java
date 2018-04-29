@@ -9,10 +9,12 @@ public class RcGetter {
     private String nameCat;
     private String idCard;
     private String titleCat;
+    private String pin;
+    private String imgCat;
     private int prog;
     private int id;
 
-    public RcGetter(String title, String desc, String img, String url, String cat, String nameCat, String idCard, String titleCat, int prog, int id) {
+    public RcGetter(String title, String desc, String img, String url, String cat, String nameCat, String idCard, String titleCat, String pin, String imgCat, int prog, int id) {
         this.title = title;
         this.desc = desc;
         this.img = img;
@@ -21,6 +23,8 @@ public class RcGetter {
         this.nameCat = nameCat;
         this.idCard = idCard;
         this.titleCat = titleCat;
+        this.pin = pin;
+        this.imgCat = imgCat;
         this.prog = prog;
         this.id = id;
     }
@@ -106,5 +110,21 @@ public class RcGetter {
 
     public void setTitleCat(String titleCat) {
         this.titleCat = titleCat;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getImgCat() {
+        return imgCat;
+    }
+
+    public void setImgCat(String imgCat) {
+        this.imgCat = imgCat;
     }
 }

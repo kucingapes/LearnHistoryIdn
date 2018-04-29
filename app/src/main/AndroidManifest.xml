@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.utsman.kucingapes.learnhistoryidn">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPagerActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Recycler" />
         <activity android:name=".Detail" />
@@ -23,7 +23,23 @@
             </intent-filter>
         </activity>
         <activity android:name=".Input" />
-        <activity android:name=".MainMenu"></activity>
+        <activity android:name=".MainMenu"/>
+
+        <service
+            android:name=".NotifUpdate"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.onesignal.NotificationExtender" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".BgService"
+            android:exported="false"/>
+        <service android:name=".LoginActivity" />
+
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+
     </application>
 
 </manifest>

@@ -15,9 +15,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.utsman.kucingapes.learnhistoryidn.Adapter.ItemViewHolder;
 import com.utsman.kucingapes.learnhistoryidn.Adapter.RcGetter;
 
@@ -27,6 +30,7 @@ public class Recycler extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth mAuth;
     String kategori;
+    //String itung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +48,32 @@ public class Recycler extends AppCompatActivity {
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("user").child(user.getUid());
+
+        final DatabaseReference cDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.keepSynced(true);
 
         mRecyclerView.hasFixedSize();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //Query dataQuery = mDatabase.orderByKey();
         Query catQuery = mDatabase.orderByChild("cat").equalTo(kategori);
+
+        cDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snap : dataSnapshot.child("data").getChildren()) {
+                    int itung = 0;
+                    int hasilitung;
+                   // snap.equals("kategori");
+                    hasilitung = (int) (itung+ snap.getChildrenCount());
+                    //cDatabase.child("kategori").child().child("itung").setValue(hasilitung);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         /*FirebaseRecyclerOptions recyclerOptions = new FirebaseRecyclerOptions.Builder<RcGetter>()
                 .setQuery(dataQuery, RcGetter.class).build();*/
@@ -64,6 +88,7 @@ public class Recycler extends AppCompatActivity {
                 holder.setDesc(model.getDesc());
                 holder.setImg(getBaseContext(), model.getImg());
                 holder.setProgress(model.getProg());
+                holder.setNumbProg(model.getProg());
 
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override

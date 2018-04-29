@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.utsman.kucingapes.learnhistoryidn.R;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
@@ -36,5 +37,10 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     public void setProgress(int prog){
         CircularProgressIndicator indicator = view.findViewById(R.id.circular_progress);
         indicator.setCurrentProgress(prog);
+    }
+
+    public void setNumbProg(int prog) {
+        NumberProgressBar progressBar = view.findViewById(R.id.numberprog);
+        progressBar.setProgress(prog);
     }
 }
